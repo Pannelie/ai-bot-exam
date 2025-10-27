@@ -1,0 +1,12 @@
+.chat__input {
+  padding: 1rem 2rem;
+  border: 2pt solid green;
+  border-radius: 25px;
+  color: black;
+  outline: none; /* tar bort standardfokus */
+  transition: border 0.3s ease-in-out;
+}
+
+.chat__input:focus {
+  border: 2pt solid var(--btn-bg-color);
+}

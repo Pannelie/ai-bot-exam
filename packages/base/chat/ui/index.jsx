@@ -1,22 +1,21 @@
 import { Message } from "@csbot/message";
 import "./index.css";
 import { useAskQuestion } from "@csbot/useaskquestion";
+import { Form } from "@csbot/form";
+import { Loading } from "@csbot/loading";
 
 export const Chat = () => {
   const { messages, loading, handleSubmit, inputRef } = useAskQuestion();
 
-  const messageComponents = messages.map((message, index) => <Message role={message.role} text={message.text} key={index} />);
+  const messageComponents = messages.map((message, index) => <Message role={message.role} text={message.content} key={index} />);
 
   return (
     <section className="chat">
       <section className="chat__messages">
         {messageComponents}
-        {/* {loading && } */}
+        {loading && <Loading />}
       </section>
-      <form className="chat__form" onSubmit={handleSubmit}>
-        <input type="text" className="chat__input" ref={inputRef} />
-        <button className="chat__button">Skicka</button>
-      </form>
+      <Form handleSubmit={handleSubmit} inputRef={inputRef} />
     </section>
   );
 };

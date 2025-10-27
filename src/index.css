@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+:root {
+  --main-font-color: #fff;
+  --btn-bg-color: rgb(173, 207, 173);
+}
+
 body {
   width: 100vw;
   height: 100vh;

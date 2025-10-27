@@ -1,0 +1,4 @@
+.chat__messages {
+  display: flex;
+  flex-direction: column;
+}
