@@ -1,9 +1,9 @@
-import { ChatPage } from "@csbot/chatpage";
+import { HomePage } from "@csbot/homepage";
 
 export default function App() {
   return (
     <div className="app">
-      <ChatPage />
+      <HomePage />
     </div>
   );
 }

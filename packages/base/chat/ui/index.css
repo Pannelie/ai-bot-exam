@@ -1,4 +1,24 @@
-.chat__messages {
+.chat {
+  position: fixed;
+  bottom: 90px; /* ovanför knappen */
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat__messages {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  flex: 2;
 }

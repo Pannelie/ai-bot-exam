@@ -1,14 +1,18 @@
 import "./index.css";
+import { Header } from "@csbot/header";
+import { Footer } from "@csbot/footer";
 
 export const HomePage = () => {
   return (
-    <main className="home-page">
-      <header className="header"></header>
-
-      <article className="hero">
-        <h1 className="hero__title">Hero</h1>
-        <p className="hero__text">Hero text blablabla</p>
-      </article>
-    </main>
+    <section className="home-page">
+      <Header />
+      <main>
+        <article className="hero">
+          <h1 className="hero__title">Hero</h1>
+          <p className="hero__text">Hero text blablabla</p>
+        </article>
+      </main>
+      <Footer />
+    </section>
   );
 };

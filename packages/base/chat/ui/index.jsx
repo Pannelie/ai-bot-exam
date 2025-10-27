@@ -9,12 +9,17 @@ export const Chat = () => {
 
   const messageComponents = messages.map((message, index) => <Message role={message.role} text={message.content} key={index} />);
 
+  if (loading) {
+    messageComponents.push(
+      <Message key="loading" role="assistant">
+        <Loading />
+      </Message>
+    );
+  }
+
   return (
     <section className="chat">
-      <section className="chat__messages">
-        {messageComponents}
-        {loading && <Loading />}
-      </section>
+      <section className="chat__messages">{messageComponents}</section>
       <Form handleSubmit={handleSubmit} inputRef={inputRef} />
     </section>
   );

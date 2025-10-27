@@ -1,0 +1,16 @@
+.pop-up-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--dark-bg-color);
+  color: white;
+  border-radius: 12px;
+  border: none;
+  width: fit-content;
+  padding: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: transform 0.2s;
+}

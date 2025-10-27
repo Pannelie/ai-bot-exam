@@ -1,12 +1,13 @@
 .message {
-  width: 50%;
+  max-width: 80%;
   padding: 1rem;
   border-radius: 25px;
+  margin-bottom: 0.5rem;
 }
 
 .message--user {
   text-align: right;
-  background-color: rgb(74, 164, 89);
+  background: var(--linear-gradient);
   align-self: flex-end;
   color: var(--main-font-color);
 }

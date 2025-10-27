@@ -1,12 +1,19 @@
+.chat__form {
+  display: flex;
+  flex-direction: row;
+}
+
 .chat__input {
+  flex: 2;
   padding: 1rem 2rem;
-  border: 2pt solid green;
+  border: 2pt solid #ccc;
   border-radius: 25px;
   color: black;
   outline: none; /* tar bort standardfokus */
-  transition: border 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .chat__input:focus {
-  border: 2pt solid var(--btn-bg-color);
+  border-color: var(--red-highlight-color);
+  box-shadow: 0 0 5px var(--red-highlight-color);
 }
