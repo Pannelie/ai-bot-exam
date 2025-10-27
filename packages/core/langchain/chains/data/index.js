@@ -1,9 +1,11 @@
 import { RunnableSequence, RunnablePassthrough } from "@langchain/core/runnables";
 import { retriever } from "../../../supabase/retriever/data";
-import { standAloneQuestionTemplate } from "@csbot/templates";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { combineDocuments } from "../../../utils";
 import { BufferMemory } from "langchain/memory";
+import { ConversationChain } from "langchain/chains";
+import { llm } from "@csbot/llm";
+import { standAloneQuestionTemplate, answerTemplate } from "@csbot/templates";
 
 const memory = new BufferMemory({
   memoryKey: "history",
@@ -26,7 +28,7 @@ const retrieverChain = RunnableSequence.from([
   combineDocuments,
 ]);
 
-const conversationChain = new conversationChain({
+const conversationChain = new ConversationChain({
   llm,
   prompt: answerTemplate,
   memory,
