@@ -1,16 +1,68 @@
-.pop-up-btn {
+.popup-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1.5rem;
+  right: 1.5rem;
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-end; */
+  /* gap: 0.5rem; */
+  z-index: 1000;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pop-up-btn {
+  position: relative;
   background-color: var(--dark-bg-color);
   color: white;
-  border-radius: 12px;
+  border-radius: 10px;
   border: none;
-  width: fit-content;
+  width: 240px;
+  height: 3rem;
   padding: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: transform 0.2s;
+  transition: all 0.3s cubic-bezier(0.25, 1.5, 0.5, 1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pop-up-btn__text {
+  transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+  display: inline-block; /* viktigt för transform */
+}
+
+.pop-up-btn:hover .pop-up-btn__text {
+  transform: scale(1.05);
+}
+.pop-up-btn--closed {
+  width: 40px;
+  color: #f5f4f6;
+}
+
+/* Dölj texten vid stängt läge */
+.pop-up-btn--closed .pop-up-btn__text {
+  opacity: 0;
+  transform: scale(1);
+}
+.pop-up-btn:hover .pop-up-btn__icon {
+  transform: scale(1.2);
+}
+
+/* Visa X-ikon med fade */
+.pop-up-btn__icon {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out 0.2s, transform 0.25s ease-in-out;
+}
+
+.pop-up-btn--closed .pop-up-btn__icon {
+  opacity: 1;
 }
