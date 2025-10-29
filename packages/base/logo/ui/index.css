@@ -1,9 +1,12 @@
 .logo {
   border-radius: 1rem;
+  height: auto;
+  object-fit: contain;
 }
 
 .logo--small {
   width: 2.5rem;
+  align-self: flex-end;
 }
 
 .logo--large {
