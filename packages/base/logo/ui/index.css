@@ -6,9 +6,12 @@
 
 .logo--small {
   width: 2.5rem;
-  align-self: flex-end;
 }
 
 .logo--large {
-  width: 100px;
+  width: 6rem;
+}
+
+.logo--popup {
+  width: 5rem;
 }
