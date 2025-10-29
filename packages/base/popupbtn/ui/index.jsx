@@ -2,22 +2,22 @@ import { useState } from "react";
 import "./index.css";
 import { Chat } from "@csbot/chat";
 import { Logo } from "@csbot/logo";
+import { useChatToggle } from "@csbot/usechattoggle";
 
 export const PopUpBtn = () => {
-  const [open, setOpen] = useState(false);
+  const { open, toggle } = useChatToggle();
+  const [hover, setHover] = useState(false);
 
-  const toggleChat = () => {
-    setOpen((prev) => !prev);
-  };
   return (
     <div className="popup-container">
       {open && <Chat />}
-      <div className="popup-header">
-        <button className={`pop-up-btn ${open ? "pop-up-btn--closed" : ""}`} onClick={toggleChat}>
-          <span className="pop-up-btn__text">Behöver du hjälp?</span>
-          <span className="pop-up-btn__icon">✕</span>
-        </button>
-        {!open && <Logo type="small" />}
+      <div className="popup-button" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={toggle}>
+        {!open && (
+          <>
+            <Logo type="popup" /> <div className={`tooltip-text ${hover ? "visible" : ""}`}>Behöver du hjälp?</div>{" "}
+          </>
+        )}
+        {open && <button className={"close-btn"}>✕</button>}
       </div>
     </div>
   );
