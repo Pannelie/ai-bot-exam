@@ -25,3 +25,29 @@
 .header__title--small {
   font-size: 1.2rem;
 }
+
+@media (max-width: 650px) {
+  .header__title {
+    font-size: 2.7rem;
+  }
+
+  .header__title--small {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .header--large {
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .header__title {
+    font-size: 1.7rem;
+  }
+
+  .header--small {
+    border-radius: 0;
+  }
+}
