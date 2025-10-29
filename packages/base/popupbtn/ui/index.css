@@ -1,63 +1,63 @@
 .popup-container {
   position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  bottom: 2rem;
+  right: 2.5rem;
   z-index: 1000;
 }
 
-.popup-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pop-up-btn {
+.popup-button {
   position: relative;
-  background-color: var(--dark-bg-color);
-  color: white;
-  border-radius: 10px;
-  border: none;
-  width: 240px;
+  width: 3rem;
   height: 3rem;
-  padding: 1rem;
-  font-size: 1.5rem;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s cubic-bezier(0.25, 1.5, 0.5, 1);
-  overflow: hidden;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.pop-up-btn__text {
-  transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
-  display: inline-block; /* viktigt för transform */
-}
 
-.pop-up-btn:hover .pop-up-btn__text {
-  transform: scale(1.05);
-}
-.pop-up-btn--closed {
-  width: 40px;
-  color: #f5f4f6;
-}
-
-/* Dölj texten vid stängt läge */
-.pop-up-btn--closed .pop-up-btn__text {
-  opacity: 0;
-  transform: scale(1);
-}
-.pop-up-btn:hover .pop-up-btn__icon {
-  transform: scale(1.2);
-}
-
-/* Visa X-ikon med fade */
-.pop-up-btn__icon {
+.tooltip-text {
   position: absolute;
+  right: 3rem;
+  margin-right: 1rem;
+  background-color: var(--dark-bg-color);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.2s ease-in-out 0.2s, transform 0.25s ease-in-out;
+  height: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  transform: translateX(15px) scale(0.95);
+  transform-origin: right center;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.pop-up-btn--closed .pop-up-btn__icon {
+.tooltip-text.visible {
   opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.close-btn {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--dark-bg-color);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
 }
