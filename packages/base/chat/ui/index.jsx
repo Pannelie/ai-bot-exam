@@ -3,6 +3,7 @@ import "./index.css";
 import { useAskQuestion } from "@csbot/useaskquestion";
 import { Form } from "@csbot/form";
 import { Loading } from "@csbot/loading";
+import { Header } from "@csbot/header";
 
 export const Chat = () => {
   const { messages, loading, handleSubmit, inputRef } = useAskQuestion();
@@ -19,6 +20,7 @@ export const Chat = () => {
 
   return (
     <section className="chat">
+      <Header type={"small"} />
       <section className="chat__messages">{messageComponents}</section>
       <Form handleSubmit={handleSubmit} inputRef={inputRef} />
     </section>

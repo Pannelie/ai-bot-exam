@@ -1,7 +1,38 @@
 .button {
-  background-color: var(--red-highlight-color);
+  background: var(--linear-gradient);
+  background-size: 200% 100%;
+  background-position: left;
+
+  /* lägg på enfärgad overlay via färg + blend */
+  /* background-color: var(--red-highlight-color);
+  background-blend-mode: overlay; */
+
   color: var(--main-font-color);
   padding: 1rem 2rem;
   border: none;
   border-radius: 25px;
+
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  animation: gradientSweep 0.6s ease forwards;
+  background-blend-mode: normal; /* behåll den enfärgade effekten om du vill */
+}
+
+/* Klick – svepande gradient */
+.button:active {
+  /* animation: gradientSweep 0.6s ease forwards;
+  background-blend-mode: normal; */
+  transform: scale(0.97);
+}
+
+@keyframes gradientSweep {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
 }

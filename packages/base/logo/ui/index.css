@@ -1,4 +1,11 @@
 .logo {
-  width: 100px;
   border-radius: 1rem;
+}
+
+.logo--small {
+  width: 2.5rem;
+}
+
+.logo--large {
+  width: 100px;
 }

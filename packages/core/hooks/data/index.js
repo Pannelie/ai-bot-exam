@@ -3,7 +3,7 @@ import { useState } from "react";
 import { chain } from "@csbot/chains";
 
 export const useAskQuestion = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([{ role: "assistant", content: "Hej! Hur kan jag hjälpa dig idag?" }]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
 

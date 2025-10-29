@@ -5,7 +5,7 @@ import { Footer } from "@csbot/footer";
 export const HomePage = () => {
   return (
     <section className="home-page">
-      <Header />
+      <Header type={"large"} />
       <main>
         <article className="hero">
           <h1 className="hero__title">Hero</h1>
