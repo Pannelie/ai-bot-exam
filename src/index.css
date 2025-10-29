@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+:root {
+  --main-font-color: #fff;
+  --btn-bg-color: #1a6ce7;
+  --highlight-input: #0dd1fc;
+  --dark-bg-color: #011123;
+  --red-highlight-color: #f74e62;
+  --orange-highlight-color: #f29650;
+  --linear-gradient: linear-gradient(135deg, #f29650, #f74e62);
+}
+
 body {
   width: 100vw;
   height: 100vh;

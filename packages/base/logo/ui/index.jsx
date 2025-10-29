@@ -1,0 +1,9 @@
+import "./index.css";
+import logo from "../../../../src/assets/logo.png";
+import Nova from "../../../../src/assets/nova.png";
+
+export const Logo = ({ type }) => {
+  const image = type === "small" ? Nova : logo;
+
+  return <img className={`logo logo--${type}`} src={image} alt="Logo" />;
+};

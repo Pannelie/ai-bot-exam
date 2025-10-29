@@ -1,0 +1,25 @@
+.chat__form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+.chat__input {
+  flex: 2;
+  padding: 0.6rem 1rem;
+  /* border: 1pt solid var(--dark-bg-color); */
+  border: none;
+  background-color: #f5f4f6;
+  /* border: 2pt solid var(--red-highlight-color); */
+  border-radius: 10px;
+  color: black;
+  outline: none; /* tar bort standardfokus */
+  transition: all 0.3s ease-in-out;
+}
+
+.chat__input:focus {
+  outline: none;
+  /* background-color: #fffefc; */
+  /* border-color: var(--orange-highlight-color); */
+  /* box-shadow: 0 0 5px var(--orange-highlight-color); */
+}

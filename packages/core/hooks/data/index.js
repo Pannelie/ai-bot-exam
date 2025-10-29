@@ -3,7 +3,7 @@ import { useState } from "react";
 import { chain } from "@csbot/chains";
 
 export const useAskQuestion = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([{ role: "assistant", content: "Hej! Hur kan jag hjälpa dig idag?" }]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
 
@@ -16,12 +16,16 @@ export const useAskQuestion = () => {
     const question = inputRef.current.value;
     if (!question.trim()) return;
 
+    console.log("question: ", question);
+
     setLoading(true);
     addMessage("user", question);
     inputRef.current.value = "";
-    const answer = await chain.invoke({ question });
 
-    addMessage("assistant", answer || "Ingen respons");
+    const answer = await chain.invoke({ question });
+    console.log("answer: ", answer);
+
+    addMessage("assistant", answer?.response || "Ingen respons");
     setLoading(false);
   };
 
