@@ -14,7 +14,7 @@
 .header--large {
   gap: 1rem;
   padding: 1rem 2rem;
-  background-color: var(--red-highlight-color);
+  background-color: var(--dark-bg-color);
 }
 
 .header__title {
