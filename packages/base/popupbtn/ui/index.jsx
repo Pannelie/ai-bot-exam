@@ -22,11 +22,11 @@ export const PopUpBtn = () => {
             <Logo type="popup" aria-label="Öppna chatt för hjälp" aria-describedby="tooltip-chat" />{" "}
             <div id="tooltip-chat" className={`tooltip-text ${hover ? "visible" : ""}`}>
               Behöver du hjälp?
-            </div>{" "}
+            </div>
           </>
         )}
         {open && (
-          <button className={"close-btn close-btn--below"} aria-label="Stäng chat">
+          <button className={"close-btn close-btn--below"} title="Stäng chattfönster" aria-label="Stäng chatt">
             ✕
           </button>
         )}

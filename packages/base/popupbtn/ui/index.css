@@ -68,13 +68,18 @@
   border: none;
   border-radius: 10px;
   color: white;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out; /* mjukare */
+  transform-origin: center;
   cursor: pointer;
 }
 .close-btn--header {
+  display: inline-flex;
+  font-size: 1.2rem;
+  padding: 0.4rem;
   background: none;
   margin-left: auto;
-  justify-self: flex-end;
+  width: 2.5rem; /* definierad bredd */
+  height: 2.5rem;
 }
 
 .close-btn--below {
@@ -96,6 +101,11 @@
     bottom: 0; /* justera efter var popup-knappen sitter */
     right: 0;
     z-index: 1;
+  }
+
+  .close-btn--header {
+    font-size: 1.6rem;
+    padding: 0.8rem;
   }
 
   .close-btn--below {
