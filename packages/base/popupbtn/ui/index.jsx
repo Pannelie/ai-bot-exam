@@ -10,7 +10,12 @@ export const PopUpBtn = () => {
 
   return (
     <div className="popup-container">
-      {open && <Chat />}
+      {/* Allt relaterat till tidigare sökning försvinner om jag 
+      renderar om komponenten, styrs bättre visuellt av css då */}
+      {/* {open && <Chat />} */}
+      <div className={`chat-wrapper ${open ? "visible" : "hidden"}`}>
+        <Chat />
+      </div>
       <div className="popup-button" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={toggle}>
         {!open && (
           <>
@@ -21,7 +26,7 @@ export const PopUpBtn = () => {
           </>
         )}
         {open && (
-          <button className={"close-btn"} aria-label="Stäng chat">
+          <button className={"close-btn close-btn--below"} aria-label="Stäng chat">
             ✕
           </button>
         )}
