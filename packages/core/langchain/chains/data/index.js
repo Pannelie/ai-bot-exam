@@ -18,7 +18,6 @@ const standAloneQuestionChain = RunnableSequence.from([
   standAloneQuestionTemplate, //hämtar min prompt för att få specifik fråga
   llm, //skickar den till min språkmodell, som producerar ett svar
   (output) => {
-    console.log("Efter LLM (standaloneQuestion):", output);
     return output; // output är AIMessage, StringOutputParser tar hand om texten
   },
   new StringOutputParser(), //plockar ut endast sträng
@@ -26,15 +25,22 @@ const standAloneQuestionChain = RunnableSequence.from([
 
 const retrieverChain = RunnableSequence.from([
   (data) => {
-    console.log("Data till retrieverChain:", data);
+    console.log("StandaloneQuestion", data);
     return data.standaloneQuestion;
   },
-  retriever,
-  (output) => {
-    console.log("Efter retriever:", output);
-    return output;
+  async (question) => {
+    const docs = await retriever.invoke(question);
+    // OBS: om du använder SupabaseVectorStore kan du istället köra similaritySearch
+    return docs;
   },
-  combineDocuments,
+  (docs) => {
+    const combinedText = docs.map((doc) => doc.pageContent).join("\n\n");
+    const sources = docs.map((doc) => ({
+      title: doc.metadata.title || "Okänd källa",
+      anchorId: doc.metadata.anchorId || doc.metadata.id || "",
+    }));
+    return { combinedText, sources };
+  },
   (output) => {
     console.log("Efter combineDocuments:", output);
     return output;
@@ -52,20 +58,21 @@ export const chain = RunnableSequence.from([
     standaloneQuestion: standAloneQuestionChain,
     originalQuestion: new RunnablePassthrough(),
   },
-  {
-    context: retrieverChain,
-    question: ({ originalQuestion }) => {
-      console.log("originalQuestion:", originalQuestion);
-      return originalQuestion.question;
-    },
-  },
-  (output) => {
-    console.log("Innan conversationChain:", output);
-    return output;
-  },
-  conversationChain,
-  (output) => {
-    console.log("Slutresultat (conversationChain):", output);
-    return output;
+  async (data) => {
+    // Hämta relevanta dokument
+    const result = await retrieverChain.invoke(data);
+
+    // Skicka endast texten till ConversationChain
+    const conversationInput = {
+      context: result?.combinedText || "",
+      question: data.originalQuestion.question,
+    };
+
+    const llmOutput = await conversationChain.invoke(conversationInput);
+
+    return {
+      response: llmOutput.response,
+      sources: result.sources || [],
+    };
   },
 ]);

@@ -5,10 +5,23 @@ import { Form } from "@csbot/form";
 import { Loading } from "@csbot/loading";
 import { Header } from "@csbot/header";
 
-export const Chat = () => {
+export const Chat = ({ onSourceClick }) => {
   const { messages, loading, handleSubmit, inputRef } = useAskQuestion();
 
-  const messageComponents = messages.map((message, index) => <Message role={message.role} text={message.content} key={index} />);
+  const messageComponents = messages.map((message, index) => {
+    if (message.source && onSourceClick) {
+      return (
+        <Message
+          key={index}
+          role={message.role}
+          text={message.content}
+          source={message.source}
+          onSourceClick={() => onSourceClick(message.source)}
+        />
+      );
+    }
+    return <Message key={index} role={message.role} text={message.content} />;
+  });
 
   if (loading) {
     messageComponents.push(
@@ -17,7 +30,6 @@ export const Chat = () => {
       </Message>
     );
   }
-
   return (
     <section className="chat">
       <Header type={"small"} />

@@ -9,14 +9,16 @@ export const standAloneQuestionTemplate = PromptTemplate.fromTemplate(`
 export const answerTemplate = ChatPromptTemplate.fromMessages([
   [
     "system",
-    `Du är en hjälpsam assistent som vet allt om företaget TechNova AB. 
-     Svara tydligt, korrekt och kortfattat på användarens fråga. 
-     Om informationen inte finns i kontexten, säg att du inte vet.`,
+    `Du är en vänlig kundtjänstassistent för TechNova AB.
+     Du svarar endast på frågor om TechNova, produkter, leveranser, garantier samt information från företagets FAQ och policydokument.
+     Svara alltid tydligt och kortfattat.
+     Om du inte hittar relevant information i kontexten, skriv ett vänligt svar som förklarar att du tyvärr inte kan besvara frågan.
+     Du ska inte hitta på information utanför TechNova AB.`,
   ],
   new MessagesPlaceholder("history"),
   [
     "user",
-    `Kontext: {context}
+    `Här är tillgänglig information: {context}
     Fråga: {question} 
     Svar:`,
   ],
