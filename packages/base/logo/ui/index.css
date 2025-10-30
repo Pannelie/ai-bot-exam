@@ -1,5 +1,7 @@
 .logo {
   border-radius: 1rem;
+  height: auto;
+  object-fit: contain;
 }
 
 .logo--small {
@@ -7,5 +9,21 @@
 }
 
 .logo--large {
-  width: 100px;
+  width: 6rem;
+}
+
+.logo--popup {
+  width: 5rem;
+}
+
+@media (max-width: 650px) {
+  .logo--large {
+    width: 5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo--large {
+    width: 4rem;
+  }
 }

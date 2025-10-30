@@ -1,16 +1,114 @@
-.pop-up-btn {
+.popup-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 1000;
+}
+
+.chat-wrapper {
+  position: fixed;
+  bottom: 1.3rem; /* justera efter var popup-knappen sitter */
+  right: 1rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.chat-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.chat-wrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.popup-button {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-text {
+  position: absolute;
+  right: 3rem;
+  margin-right: 1rem;
   background-color: var(--dark-bg-color);
   color: white;
-  border-radius: 12px;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  opacity: 0;
+  height: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  transform: translateX(15px) scale(0.95);
+  transform-origin: right center;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tooltip-text.visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  width: fit-content;
-  padding: 1rem;
-  font-size: 1.5rem;
+  border-radius: 10px;
+  color: white;
+  transition: all 0.3s ease-in-out; /* mjukare */
+  transform-origin: center;
   cursor: pointer;
+}
+.close-btn--header {
+  display: inline-flex;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+  background: none;
+  margin-left: auto;
+  width: 2.5rem; /* definierad bredd */
+  height: 2.5rem;
+}
+
+.close-btn--below {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  background-color: var(--dark-bg-color);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: transform 0.2s;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 500px) {
+  .chat-wrapper {
+    width: 100%;
+    height: 100%;
+    bottom: 0; /* justera efter var popup-knappen sitter */
+    right: 0;
+    z-index: 1;
+  }
+
+  .close-btn--header {
+    font-size: 1.6rem;
+    padding: 0.8rem;
+  }
+
+  .close-btn--below {
+    z-index: 0;
+  }
 }

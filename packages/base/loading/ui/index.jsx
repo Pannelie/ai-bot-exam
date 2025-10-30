@@ -1,5 +1,5 @@
 import "./index.css";
 
 export const Loading = () => {
-  return <div></div>;
+  return <span className="loading"></span>;
 };

@@ -18,8 +18,4 @@
 }
 
 .chat__input:focus {
-  outline: none;
-  /* background-color: #fffefc; */
-  /* border-color: var(--orange-highlight-color); */
-  /* box-shadow: 0 0 5px var(--orange-highlight-color); */
 }
