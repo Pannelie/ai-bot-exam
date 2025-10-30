@@ -1,5 +1,5 @@
 .message {
-  max-width: 80%;
+  max-width: 75%;
   margin-bottom: 0.5rem;
   height: fit-content;
   display: flex;
@@ -24,7 +24,7 @@
 
 .message__content {
   margin-top: 0.3rem;
-  padding: 1rem;
+  padding: 0.7rem 0.8rem;
   border-radius: 10px;
 }
 
