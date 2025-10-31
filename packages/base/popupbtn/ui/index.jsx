@@ -4,14 +4,18 @@ import { Chat } from "@csbot/chat";
 import { Logo } from "@csbot/logo";
 import { useChatToggle } from "@csbot/usechattoggle";
 import { DocSection } from "../../docsection/ui";
+import { Switch } from "@csbot/switch";
+import { FaqDropdown } from "@csbot/faqdropdown";
 
 export const PopUpBtn = () => {
   const { open, toggle } = useChatToggle();
   const [hover, setHover] = useState(false);
   const [docData, setDocData] = useState(null);
+  const [toggleSwitch, setToggleSwitch] = useState("chat");
 
-  const handleSourceClick = (source) => {
-    setDocData(source); // skickar source från AI-svaret
+  const handleSourceClick = (sourceTitle) => {
+    setDocData(sourceTitle); // skickar source från AI-svaret
+    setToggleSwitch("faq");
   };
   return (
     <div className="popup-container">
@@ -19,7 +23,8 @@ export const PopUpBtn = () => {
       renderar om komponenten, styrs bättre visuellt av css då */}
       {/* {open && <Chat />} */}
       <div className={`chat-wrapper ${open ? "visible" : "hidden"}`}>
-        <Chat onSourceClick={handleSourceClick} />
+        {toggleSwitch === "chat" ? <Chat onSourceClick={handleSourceClick} /> : <FaqDropdown highlightSource={docData} />}
+        <Switch toggleSwitch={toggleSwitch} setToggleSwitch={setToggleSwitch} />
       </div>
       <div className="popup-button" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={toggle}>
         {!open && (
@@ -36,7 +41,7 @@ export const PopUpBtn = () => {
           </button>
         )}
       </div>
-      {docData && <DocSection docData={docData} />}
+      {/* {docData && <DocSection docData={docData} />} */}
     </div>
   );
 };
