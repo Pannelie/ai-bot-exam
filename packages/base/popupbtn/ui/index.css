@@ -7,9 +7,11 @@
 
 .chat-wrapper {
   position: fixed;
-  bottom: 1.3rem; /* justera efter var popup-knappen sitter */
-  right: 1rem;
+  bottom: 5.5rem; /* justera efter var popup-knappen sitter */
+  right: 2rem;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-wrapper.hidden {
@@ -22,6 +24,8 @@
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
 .popup-button {

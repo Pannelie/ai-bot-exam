@@ -1,0 +1,49 @@
+.switch {
+  position: relative;
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  z-index: 10001;
+}
+
+.switch__button {
+  flex: 1;
+  background-color: var(--dark-bg-color);
+  font-size: 1.2rem;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.switch__button:first-child {
+  border-radius: 0 0 0px 10px;
+}
+.switch__button:last-child {
+  border-radius: 0 0 10px 0px;
+}
+.switch__text {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: center;
+}
+
+.switch__button:hover .switch__text {
+  transform: scale(1.1);
+}
+.switch__button.active {
+  background-color: var(--red-highlight-color);
+}
+
+@media (max-width: 500px) {
+  .switch {
+    width: 100%;
+  }
+
+  .switch__button:first-child {
+    border-radius: 0;
+  }
+  .switch__button:last-child {
+    border-radius: 0;
+  }
+}
