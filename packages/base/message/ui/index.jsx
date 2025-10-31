@@ -9,7 +9,7 @@ export const Message = ({ role, text, children, source, onSourceClick }) => {
         <p className={`message__content message__content--${role === "user" ? "user" : "assistant"}`}>
           {text || children}
           {source && (
-            <button className="message__source-link" onClick={() => onSourceClick(source)}>
+            <button className="message__source-link" onClick={onSourceClick}>
               Läs mer här
             </button>
           )}
