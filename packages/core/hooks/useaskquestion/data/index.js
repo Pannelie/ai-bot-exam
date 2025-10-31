@@ -6,13 +6,12 @@ import { useChatStore } from "@csbot/usechatstore";
 export const useAskQuestion = () => {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
-
-  const { messages, addMessage } = useChatStore();
+  const { messages, addMessage, updateMessage } = useChatStore();
 
   const welcomeMessage = "Hej! Jag heter Nova och kan svara på allt du undrar över inom TechNova Ab. Hur kan jag hjälpa dig idag?";
 
   if (messages.length === 0) {
-    addMessage({ role: "assistant", content: welcomeMessage });
+    addMessage({ role: "assistant", content: welcomeMessage, loading: false });
   }
 
   const handleSubmit = async (e) => {
@@ -24,6 +23,8 @@ export const useAskQuestion = () => {
 
     setLoading(true);
     addMessage({ role: "user", content: question });
+    const loadingMessageId = addMessage({ role: "assistant", content: "", loading: true });
+
     inputRef.current.value = "";
 
     const answer = await chain.invoke({
@@ -48,11 +49,11 @@ export const useAskQuestion = () => {
       }, null);
     }
 
-    addMessage({
-      role: "assistant",
+    updateMessage(loadingMessageId, {
       content: assistantMessage,
       source: mainSource,
       highlight: mainSource?.title,
+      loading: false,
     });
 
     setLoading(false);
