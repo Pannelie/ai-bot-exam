@@ -16,7 +16,7 @@ export const Chat = ({ onSourceClick }) => {
           role={message.role}
           text={message.content}
           source={message.source}
-          onSourceClick={() => onSourceClick(message.source)}
+          onSourceClick={() => onSourceClick(message.highlight)}
         />
       );
     }
@@ -32,7 +32,7 @@ export const Chat = ({ onSourceClick }) => {
   }
   return (
     <section className="chat">
-      <Header type={"small"} />
+      <Header title={"Nova"} type={"small"} />
       <section className="chat__messages">{messageComponents}</section>
       <Form handleSubmit={handleSubmit} inputRef={inputRef} />
     </section>
