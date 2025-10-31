@@ -5,7 +5,12 @@
 }
 
 .logo--small {
-  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.logo--smallLogo {
+  width: 80px; /* samma som small */
+  height: auto;
 }
 
 .logo--large {

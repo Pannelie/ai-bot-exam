@@ -7,7 +7,7 @@
 
 .header--small {
   gap: 0.5rem;
-  background-color: var(--red-highlight-color);
+  background-color: var(--dark-bg-color);
   padding: 0.5rem 1rem;
   border-radius: 10px 10px 0 0;
 }
