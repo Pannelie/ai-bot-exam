@@ -52,6 +52,7 @@ export const useAskQuestion = () => {
       role: "assistant",
       content: assistantMessage,
       source: mainSource,
+      highlight: mainSource?.title,
     });
 
     setLoading(false);
