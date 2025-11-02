@@ -11,7 +11,7 @@ export const Chat = ({ onSourceClick }) => {
     <Message
       key={index}
       role={message.role}
-      text={message.content}
+      text={message.text}
       loading={message.loading}
       source={message.source}
       onSourceClick={message.source && onSourceClick ? () => onSourceClick(message.source) : undefined}

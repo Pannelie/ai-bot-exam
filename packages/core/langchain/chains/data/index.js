@@ -9,14 +9,20 @@ import { standAloneQuestionTemplate, answerTemplate } from "@csbot/templates";
 import { z } from "zod";
 
 const memory = new BufferMemory({
-  memoryKey: "history",
+  memoryKey: "chat_history",
   returnMessages: true,
   inputKey: "question",
 });
 
 const answerSchema = z.object({
-  response: z.string().min(1),
-  mainSource: z.string().nullable(),
+  response: z.union([
+    z.string().min(1),
+    z.object({
+      response: z.string().min(1),
+      mainSource: z.string().nullable(),
+    }),
+  ]),
+  mainSource: z.string().nullable().optional(),
 });
 
 //tar en array
@@ -39,9 +45,6 @@ const retrieverChain = RunnableSequence.from([
       combinedText,
     };
   },
-  // (docs) => ({
-  //   combinedText: docs.map((d) => d.pageContent).join("\n\n"),
-  // }),
 ]);
 
 const answerParser = StructuredOutputParser.fromZodSchema(answerSchema);
@@ -64,14 +67,17 @@ export const chain = RunnableSequence.from([
       console.log("Retriever result:", result);
 
       const conversationInput = {
-        context: result?.combinedText || "",
         question: data.originalQuestion?.question || "",
+        context: result?.combinedText || "",
       };
 
+      console.log("Historik innan LLM:", memory.chatHistory);
       const llmOutput = await conversationChain.invoke(conversationInput);
-      console.log("llmOutput:", llmOutput);
+      console.log("Historik efter LLM:", memory.chatHistory);
+      console.log("LLM raw output:", llmOutput);
 
-      if (!llmOutput.mainSource) llmOutput.mainSource = null;
+      // if (!llmOutput.mainSource) llmOutput.mainSource = null;
+      console.log("LLM raw output with mainsource:", llmOutput);
       return llmOutput;
     } catch (err) {
       console.error("Fel i chain-steget:", err);
@@ -80,40 +86,3 @@ export const chain = RunnableSequence.from([
     }
   },
 ]);
-//     let parsedOutput;
-
-//     try {
-//       if (typeof llmOutput === "string") {
-//         parsedOutput = JSON.parse(llmOutput);
-//       } else if (typeof llmOutput?.response === "string") {
-//         // 🚨 Här ligger den inbäddade JSON-strängen
-//         parsedOutput = JSON.parse(llmOutput.response);
-//       } else {
-//         parsedOutput = llmOutput;
-//       }
-//     } catch (err) {
-//       console.warn("Kunde inte parse AI-output:", err, llmOutput);
-//       parsedOutput = { response: "Jag kunde inte läsa svaret korrekt.", mainSource: null };
-//     }
-
-//     if (typeof parsedOutput.mainSource === "undefined" && result.combinedText) {
-//       const questionWords = data.originalQuestion.question
-//         .toLowerCase()
-//         .split(" ")
-//         .filter((w) => w.length > 2);
-//       const sentences = result.combinedText.split(/(?<=[.!?])\s+/);
-//       const bestSentence = sentences.find((s) => questionWords.some((word) => s.toLowerCase().includes(word)));
-//       parsedOutput.mainSource = bestSentence || null;
-//     }
-
-//     // 🧩 Fallback endast om undefined (inte null)
-//     if (typeof parsedOutput.mainSource === "undefined") {
-//       parsedOutput.mainSource = "Ingen relevant sektion hittades";
-//     }
-
-//     return {
-//       response: parsedOutput.response,
-//       mainSource: parsedOutput.mainSource,
-//     };
-//   },
-// ]);
