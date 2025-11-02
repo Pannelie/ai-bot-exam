@@ -26,6 +26,10 @@
   margin-top: 0.3rem;
   padding: 0.7rem 0.8rem;
   border-radius: 10px;
+
+  /* display: flex;
+  flex-direction: column;
+  gap: 0.2rem; */
 }
 
 .message__content--user {
@@ -38,3 +42,5 @@
 .message__content--assistant {
   background-color: #f5f4f6;
 }
+
+/* .message__source-link {} */
