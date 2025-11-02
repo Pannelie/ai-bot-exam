@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,9 +14,11 @@
   --red-highlight-color: #f74e62;
   --orange-highlight-color: #f29650;
   --linear-gradient: linear-gradient(135deg, #f29650, #f74e62);
+  --font-family: "Montserrat", sans-serif;
 }
 
 body {
   width: 100vw;
   height: 100vh;
+  font-family: var(--font-family);
 }
