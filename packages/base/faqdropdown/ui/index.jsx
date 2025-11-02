@@ -42,61 +42,83 @@ export const FaqDropdown = ({ highlightSource }) => {
 
   const faqData = useMemo(() => parseFaqText(text), []);
 
-  // Funktion för att highlighta och scrolla till rätt fråga
   const highlightQuestion = (sourceTitle) => {
     if (!sourceTitle) return;
 
-    const clean = (str) =>
-      str
-        .toLowerCase()
-        .replace(/^\d+\s*/, "")
-        .trim();
+    // 🧩 Dela upp strängen på radbrytningar, punkt, frågetecken, utropstecken etc.
+    const parts = sourceTitle
+      .split(/[\n\r?.!]+/)
+      .map((p) => p.trim())
+      .filter(Boolean);
 
-    // Stäng alla öppna details först
+    // Stäng alla öppna <details> först
     Object.values(faqRef.current).forEach((el) => el && (el.open = false));
 
-    // 1️⃣ Försök matcha sektionstitel (###)
+    console.log("Söker efter delar:", parts);
+
+    let matchedSection = null;
+    let matchedQuestion = null;
+
+    // 🔹 1. Leta efter sektionstitel som matchar någon del
     for (const section of faqData) {
-      if (clean(section.title).includes(clean(sourceTitle))) {
-        const sectionEl = faqRef.current[section.id];
-        if (sectionEl) {
-          sectionEl.open = true;
-          setHighlightedId({ sectionId: section.id, questionId: null });
-          setTimeout(() => {
-            sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 50);
-          console.log("📘 Hittade sektion:", section.title);
-        }
-        return;
+      if (parts.some((p) => section.title.includes(p))) {
+        matchedSection = section;
+        console.log("Hittade sektion:", section.title);
+        break;
       }
     }
 
-    // 2️⃣ Försök matcha fråga eller svar
+    // 🔹 2. Leta efter fråga eller svar i hela FAQ:n
     for (const section of faqData) {
       for (const q of section.questions) {
-        const questionMatch = clean(q.question).includes(clean(sourceTitle));
-        const answerMatch = q.answer.some((line) => clean(line).includes(clean(sourceTitle)));
+        const questionMatch = parts.some((p) => q.question.includes(p));
+        const answerMatch = q.answer.some((line) => parts.some((p) => line.includes(p)));
 
         if (questionMatch || answerMatch) {
-          const sectionEl = faqRef.current[section.id];
-          const questionEl = faqRef.current[q.id];
-
-          if (sectionEl) sectionEl.open = true;
-          if (questionEl) questionEl.open = true;
-
-          setTimeout(() => {
-            questionEl?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 50);
-
-          console.log(questionMatch ? "🎯 Hittade fråga:" : "💬 Hittade match i svar:", q.question);
-
-          setHighlightedId({ sectionId: section.id, questionId: q.id });
-          return;
+          matchedQuestion = { section, question: q };
+          console.log(questionMatch ? "Hittade fråga:" : "Hittade svar i:", q.question);
+          break;
         }
+      }
+      if (matchedQuestion) break;
+    }
+
+    // 🔹 3. Öppna sektionen och ev. scrolla till fråga
+    if (matchedSection) {
+      const sectionEl = faqRef.current[matchedSection.id];
+      if (sectionEl) {
+        sectionEl.open = true;
+        sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        setHighlightedId({ sectionId: matchedSection.id, questionId: null });
       }
     }
 
-    console.warn("Ingen match hittades för:", sourceTitle);
+    if (matchedQuestion) {
+      const sectionEl = faqRef.current[matchedQuestion.section.id];
+      const questionEl = faqRef.current[matchedQuestion.question.id];
+
+      // Öppna sektion om den inte redan är öppen
+      if (sectionEl) sectionEl.open = true;
+
+      // Vänta en liten stund så sektionen hinner expandera innan scroll
+      setTimeout(
+        () => {
+          if (questionEl) {
+            questionEl.open = true;
+            questionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+            setHighlightedId({
+              sectionId: matchedQuestion.section.id,
+              questionId: matchedQuestion.question.id,
+            });
+          }
+        },
+        matchedSection ? 400 : 100
+      );
+    }
+
+    if (!matchedSection && !matchedQuestion) {
+      console.warn("Ingen match hittades för:", sourceTitle);
+    }
   };
 
   useEffect(() => {
