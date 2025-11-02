@@ -2,3 +2,15 @@
   display: flex;
   flex-direction: column;
 }
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero__img {
+  max-width: 600px;
+  margin-top: 1rem;
+}
