@@ -7,32 +7,17 @@ import { Header } from "@csbot/header";
 export const Chat = ({ onSourceClick }) => {
   const { messages, handleSubmit, inputRef } = useAskQuestion();
 
-  // const messageComponents = messages.map((message, index) => {
-  //   if (message.source && onSourceClick) {
-  //     return (
-  //       <Message
-  //         key={message.id || index}
-  //         role={message.role}
-  //         text={message.content}
-  //         loading={message.loading}
-  //         source={message.source}
-  //         onSourceClick={message.source && onSourceClick ? () => onSourceClick(message.highlight) : undefined}
-  //       />
-  //     );
-  //   }
-  //   return <Message key={index} role={message.role} text={message.content} />;
-  // });
-
   const messageComponents = messages.map((message, index) => (
     <Message
-      key={message.id || index}
+      key={index}
       role={message.role}
       text={message.content}
       loading={message.loading}
       source={message.source}
-      onSourceClick={message.source && onSourceClick ? () => onSourceClick(message.highlight) : undefined}
+      onSourceClick={message.source && onSourceClick ? () => onSourceClick(message.source) : undefined}
     />
   ));
+
   return (
     <section className="chat">
       <Header title={"Nova"} type={"small"} />
