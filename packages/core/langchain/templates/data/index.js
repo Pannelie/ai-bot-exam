@@ -1,7 +1,7 @@
 import { PromptTemplate, ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 
 export const standAloneQuestionTemplate = PromptTemplate.fromTemplate(`
-Givet en fråga om företaget TechNova AB. Gör om frågan till en självständig (standalone) fråga som är tydlig och begriplig.
+Givet en fråga om företaget TechNova AB, skriv om den till en tydlig och begriplig fristående fråga.
 Fråga: {question}
 Standalone Question:
 `);
@@ -25,7 +25,7 @@ Regler:
 - "mainSource" = exakt mening från {context} som stöder svaret. Du får inte ändra stavning eller lägga till något.
 `,
   ],
-  new MessagesPlaceholder("history"),
+  new MessagesPlaceholder("chat_history"),
   [
     "user",
     `Tillgänglig information:

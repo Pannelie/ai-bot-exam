@@ -3,7 +3,7 @@ import { create } from "zustand";
 const welcomeMessage = {
   id: "welcome",
   role: "assistant",
-  content: "Hej! Jag heter Nova och kan svara på allt du undrar över inom TechNova Ab. Hur kan jag hjälpa dig idag?",
+  text: "Hej! Jag heter Nova och kan svara på allt du undrar över inom TechNova Ab. Hur kan jag hjälpa dig idag?",
   loading: false,
 };
 

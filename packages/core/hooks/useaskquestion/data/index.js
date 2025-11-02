@@ -15,29 +15,29 @@ export const useAskQuestion = () => {
     console.log("question: ", question);
 
     setLoading(true);
-    addMessage({ role: "user", content: question });
-    addMessage({ role: "assistant", content: "", loading: true, source: null });
+    addMessage({ role: "user", text: question });
+    addMessage({ role: "assistant", text: "", loading: true, source: null });
     inputRef.current.value = "";
 
     try {
       const answer = await chain.invoke({ question });
       console.log("Raw answer:", answer);
 
-      const assistantMessage = typeof answer.response === "string" ? answer.response : answer.response?.response ?? "Ingen respons";
-      const mainSource = typeof answer.response === "object" ? answer.response.mainSource ?? null : null;
+      const assistantMessage = typeof answer.response === "string" ? answer.response : answer.response.response;
 
+      const mainSource = typeof answer.response === "object" ? answer.response.mainSource : answer.mainSource;
       // Bygg meddelandet
       const messageUpdate = {
-        content: assistantMessage,
+        text: assistantMessage,
         loading: false,
         source: mainSource,
       };
 
       updateAssistantMessage(messageUpdate);
-    } catch (err) {
-      console.error("Error in handleSubmit:", err);
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
       updateAssistantMessage({
-        content: "Ett fel uppstod när svaret skulle hämtas.",
+        text: "Ett fel uppstod när svaret skulle hämtas.",
         loading: false,
         source: null,
       });
