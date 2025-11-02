@@ -1,18 +1,11 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { chain } from "@csbot/chains";
 import { useChatStore } from "@csbot/usechatstore";
 
 export const useAskQuestion = () => {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
-  const { messages, addMessage, updateMessage } = useChatStore();
-
-  const welcomeMessage = "Hej! Jag heter Nova och kan svara på allt du undrar över inom TechNova Ab. Hur kan jag hjälpa dig idag?";
-
-  if (messages.length === 0) {
-    addMessage({ role: "assistant", content: welcomeMessage, loading: false });
-  }
+  const { messages, addMessage, updateAssistantMessage } = useChatStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,41 +16,34 @@ export const useAskQuestion = () => {
 
     setLoading(true);
     addMessage({ role: "user", content: question });
-    const loadingMessageId = addMessage({ role: "assistant", content: "", loading: true });
-
+    addMessage({ role: "assistant", content: "", loading: true, source: null });
     inputRef.current.value = "";
 
-    const answer = await chain.invoke({
-      question,
-      instructions: "Välj den mest relevanta källan från listan och returnera den som mainSource tillsammans med svaret.",
-    });
-    console.log("answer: ", answer);
+    try {
+      const answer = await chain.invoke({ question });
+      console.log("Raw answer:", answer);
 
-    let assistantMessage = answer?.response || "Ingen respons";
-    let mainSource = answer?.mainSource || null;
+      const assistantMessage = typeof answer.response === "string" ? answer.response : answer.response?.response ?? "Ingen respons";
+      const mainSource = typeof answer.response === "object" ? answer.response.mainSource ?? null : null;
 
-    if (!mainSource && answer?.sources?.length) {
-      mainSource = answer.sources.reduce((best, source) => {
-        const matchCount = question
-          .toLowerCase()
-          .split(" ")
-          .filter((word) => source.title.toLowerCase().includes(word) || source.content?.toLowerCase().includes(word)).length;
-        if (!best || matchCount > best.matchCount) {
-          return { ...source, matchCount };
-        }
-        return best;
-      }, null);
+      // Bygg meddelandet
+      const messageUpdate = {
+        content: assistantMessage,
+        loading: false,
+        source: mainSource,
+      };
+
+      updateAssistantMessage(messageUpdate);
+    } catch (err) {
+      console.error("Error in handleSubmit:", err);
+      updateAssistantMessage({
+        content: "Ett fel uppstod när svaret skulle hämtas.",
+        loading: false,
+        source: null,
+      });
+    } finally {
+      setLoading(false);
     }
-
-    updateMessage(loadingMessageId, {
-      content: assistantMessage,
-      source: mainSource,
-      highlight: mainSource?.title,
-      loading: false,
-    });
-
-    setLoading(false);
   };
-
   return { messages, loading, handleSubmit, inputRef };
 };
