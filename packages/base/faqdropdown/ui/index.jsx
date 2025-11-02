@@ -122,7 +122,15 @@ export const FaqDropdown = ({ highlightSource }) => {
   };
 
   useEffect(() => {
-    highlightQuestion(highlightSource);
+    if (highlightSource) {
+      highlightQuestion(highlightSource);
+    } else {
+      setHighlightedId({ sectionId: null, questionId: null });
+
+      Object.values(faqRef.current).forEach((el) => {
+        if (el) el.open = false;
+      });
+    }
   }, [highlightSource, faqData]);
 
   return (
