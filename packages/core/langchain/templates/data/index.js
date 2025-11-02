@@ -15,7 +15,7 @@ Du får endast använda informationen i {context} för att besvara frågan {ques
 Om svaret inte finns i {context}, returnera följande JSON-objekt:
 
 {{
-  "response": "Jag hittar tyvärr ingen information om detta.",
+  "response": "Jag kan tyvärr enbart svara på frågor om TechNova AB, produkter, leveranser, garantier samt info från företagets FAQ-och policydokument.",
   "mainSource": null
   }}
 

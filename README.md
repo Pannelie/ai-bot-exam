@@ -1,16 +1,33 @@
-# React + Vite
+Ny function:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I min "chains":
 
-Currently, two official plugins are available:
+Steg 1:
+const answerSchema = z.object({
+response: z.union([
+z.string().min(1),
+z.object({
+response: z.string().min(1),
+mainSource: z.string().nullable(),
+}),
+]),
+});
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Steg 2:
+const answerParser = StructuredOutputParser.fromZodSchema(answerSchema);
 
-## React Compiler
+Steg 3:
+const conversationChain = new ConversationChain({
+llm,
+prompt: answerTemplate,
+memory,
+outputParser: answerParser,
+});
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#Jag valde StructuredOutputParser.fromZodSchema
 
-## Expanding the ESLint configuration
+Min LLM skickar alltid en sträng, och den vill jag konvertera till ett object för att lättare kunna sköta min navigering längre in i koden. Den baseras på min answerPrompt som ska leverera både response och den del av context som svaret baseras på "mainSource"
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Min StructuredOutputParser tar emot min text inuti conversationsChain och konverterar om den till ett object. Detta baseras på ett zod schema som jag strukturerat upp (answerSchema). Om min text ser ut som JSON så blir det ett object med response och mainSource, men om det bara är en string så mappas den till enbart response.
+
+Kodandet har strulat en hel del under denna punkt. Fungerade felfritt första omgången, men resterande så hakade den upp sig på mitt zod schema innan jag la till möjligheten att justera utifrån JSON utseende eller text.

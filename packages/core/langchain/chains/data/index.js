@@ -22,7 +22,6 @@ const answerSchema = z.object({
       mainSource: z.string().nullable(),
     }),
   ]),
-  mainSource: z.string().nullable().optional(),
 });
 
 //tar en array
@@ -73,11 +72,8 @@ export const chain = RunnableSequence.from([
 
       console.log("Historik innan LLM:", memory.chatHistory);
       const llmOutput = await conversationChain.invoke(conversationInput);
-      console.log("Historik efter LLM:", memory.chatHistory);
       console.log("LLM raw output:", llmOutput);
 
-      // if (!llmOutput.mainSource) llmOutput.mainSource = null;
-      console.log("LLM raw output with mainsource:", llmOutput);
       return llmOutput;
     } catch (err) {
       console.error("Fel i chain-steget:", err);

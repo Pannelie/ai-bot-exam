@@ -3,7 +3,6 @@ import "./index.css";
 import { Chat } from "@csbot/chat";
 import { Logo } from "@csbot/logo";
 import { useChatToggle } from "@csbot/usechattoggle";
-import { DocSection } from "../../docsection/ui";
 import { Switch } from "@csbot/switch";
 import { FaqDropdown } from "@csbot/faqdropdown";
 
@@ -19,9 +18,6 @@ export const PopUpBtn = () => {
   };
   return (
     <div className="popup-container">
-      {/* Allt relaterat till tidigare sökning försvinner om jag 
-      renderar om komponenten, styrs bättre visuellt av css då */}
-      {/* {open && <Chat />} */}
       <div className={`chat-wrapper ${open ? "visible" : "hidden"}`}>
         {toggleSwitch === "chat" ? <Chat onSourceClick={handleSourceClick} /> : <FaqDropdown highlightSource={sourceData} />}
         <Switch toggleSwitch={toggleSwitch} setToggleSwitch={setToggleSwitch} />

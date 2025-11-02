@@ -26,7 +26,7 @@ export const useAskQuestion = () => {
       const assistantMessage = typeof answer.response === "string" ? answer.response : answer.response.response;
 
       const mainSource = typeof answer.response === "object" ? answer.response.mainSource : answer.mainSource;
-      // Bygg meddelandet
+
       const messageUpdate = {
         text: assistantMessage,
         loading: false,

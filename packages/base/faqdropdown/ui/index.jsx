@@ -45,7 +45,6 @@ export const FaqDropdown = ({ highlightSource }) => {
   const highlightQuestion = (sourceTitle) => {
     if (!sourceTitle) return;
 
-    // 🧩 Dela upp strängen på radbrytningar, punkt, frågetecken, utropstecken etc.
     const parts = sourceTitle
       .split(/[\n\r?.!]+/)
       .map((p) => p.trim())
@@ -59,7 +58,6 @@ export const FaqDropdown = ({ highlightSource }) => {
     let matchedSection = null;
     let matchedQuestion = null;
 
-    // 🔹 1. Leta efter sektionstitel som matchar någon del
     for (const section of faqData) {
       if (parts.some((p) => section.title.includes(p))) {
         matchedSection = section;
@@ -68,7 +66,6 @@ export const FaqDropdown = ({ highlightSource }) => {
       }
     }
 
-    // 🔹 2. Leta efter fråga eller svar i hela FAQ:n
     for (const section of faqData) {
       for (const q of section.questions) {
         const questionMatch = parts.some((p) => q.question.includes(p));
@@ -83,7 +80,6 @@ export const FaqDropdown = ({ highlightSource }) => {
       if (matchedQuestion) break;
     }
 
-    // 🔹 3. Öppna sektionen och ev. scrolla till fråga
     if (matchedSection) {
       const sectionEl = faqRef.current[matchedSection.id];
       if (sectionEl) {
@@ -97,7 +93,6 @@ export const FaqDropdown = ({ highlightSource }) => {
       const sectionEl = faqRef.current[matchedQuestion.section.id];
       const questionEl = faqRef.current[matchedQuestion.question.id];
 
-      // Öppna sektion om den inte redan är öppen
       if (sectionEl) sectionEl.open = true;
 
       // Vänta en liten stund så sektionen hinner expandera innan scroll
@@ -122,7 +117,15 @@ export const FaqDropdown = ({ highlightSource }) => {
   };
 
   useEffect(() => {
-    highlightQuestion(highlightSource);
+    if (highlightSource) {
+      highlightQuestion(highlightSource);
+    } else {
+      setHighlightedId({ sectionId: null, questionId: null });
+
+      Object.values(faqRef.current).forEach((el) => {
+        if (el) el.open = false;
+      });
+    }
   }, [highlightSource, faqData]);
 
   return (

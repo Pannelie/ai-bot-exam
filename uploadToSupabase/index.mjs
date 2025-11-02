@@ -11,50 +11,23 @@ const SUPABASE_API_KEY = process.env.SUPABASE_API_KEY;
 try {
   const text = await readFile(`${process.cwd()}/TechNovaFAQPolicydokument.txt`, "utf-8");
 
-  const sectionRegex = /\d+\.\s+.+?(?=\n\d+\.|$)/gs;
-  const sections = text.match(sectionRegex);
+  const textSplitter = new RecursiveCharacterTextSplitter({
+    chunkSize: 500,
+    separators: ["\n\n", "\n", " "],
+    chunkOverlap: 200,
+  });
 
-  if (!sections) throw new Error("Inget avsnitt hittades i dokumentet");
-
-  let allDocuments = [];
-
-  for (let index = 0; index < sections.length; index++) {
-    const sectionText = sections[index];
-
-    // 2️⃣ Extrahera rubrik från första raden
-    const titleMatch = sectionText.match(/^\d+\.\s+(.*)/);
-    const title = titleMatch ? titleMatch[1] : "Ingen rubrik";
-
-    const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 500,
-      separators: ["\n\n", "\n", " "],
-      chunkOverlap: 200,
-    });
-
-    // const splittedText = await textSplitter.createDocuments([text]);
-    const chunks = await textSplitter.createDocuments([sectionText]);
-
-    const chunksWithMetaData = chunks.map((doc) => ({
-      ...doc,
-      metadata: {
-        ...doc.metadata, // behåll loc
-        title: `Del ${index + 1} - ${title}`,
-        anchorId: `faq-part-${index + 1}`,
-        sectionNumber: index + 1,
-      },
-    }));
-
-    allDocuments.push(...chunksWithMetaData);
-  }
+  // const splittedText = await textSplitter.createDocuments([text]);
+  const splittedText = await textSplitter.createDocuments([text]);
 
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_API_KEY);
 
-  await SupabaseVectorStore.fromDocuments(allDocuments, new OllamaEmbeddings({ model: "llama3.1:8b" }), {
+  await SupabaseVectorStore.fromDocuments(splittedText, new OllamaEmbeddings({ model: "nomic-embed-text" }), {
     client: supabaseClient,
     tableName: "documents",
   });
 
-  console.log("Alla dokument uppladdade med metadata!", allDocuments);
+  console.log("Alla dokument uppladdade med metadata!", splittedText);
 } catch (error) {
   console.error(error);
 }
