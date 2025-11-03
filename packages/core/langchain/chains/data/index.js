@@ -53,7 +53,7 @@ const conversationChain = new ConversationChain({
   llm,
   prompt: answerTemplate,
   memory,
-  outputParser: answerParser,
+  // outputParser: answerParser,
 });
 
 export const chain = RunnableSequence.from([
@@ -75,10 +75,8 @@ export const chain = RunnableSequence.from([
       const llmOutput = await conversationChain.invoke(conversationInput);
       console.log("Historik efter LLM:", memory.chatHistory);
       console.log("LLM raw output:", llmOutput);
-
-      // if (!llmOutput.mainSource) llmOutput.mainSource = null;
-      console.log("LLM raw output with mainsource:", llmOutput);
-      return llmOutput;
+      const parsed = await answerParser.parse(llmOutput.response);
+      return parsed;
     } catch (err) {
       console.error("Fel i chain-steget:", err);
       console.trace(); // visar stacktrace
