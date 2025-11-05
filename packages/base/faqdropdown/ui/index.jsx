@@ -28,7 +28,7 @@ export const FaqDropdown = ({ highlightSource }) => {
         if (el) el.open = false;
       });
     }
-  }, [highlightSource, faqData]);
+  }, [highlightSource]);
 
   return (
     <section className="faq">
