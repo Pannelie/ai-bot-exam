@@ -1,0 +1,51 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  max-width: 80%;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.hero__img {
+  max-width: 600px;
+}
+
+.hero__text {
+  font-size: 1.3rem;
+}
+
+.hero__text--quote {
+  font-style: italic;
+}
+
+@media (max-width: 570px) {
+  .hero__img {
+    max-width: 400px;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero {
+    margin-top: 1rem;
+  }
+
+  .hero__img {
+    max-width: 300px;
+    margin-top: 0.5rem;
+  }
+  .hero__title {
+    font-size: 1.4rem;
+  }
+
+  .hero__text {
+    font-size: 0.8rem;
+  }
+
+  .hero__text--quote {
+    font-size: 0.7rem;
+  }
+}

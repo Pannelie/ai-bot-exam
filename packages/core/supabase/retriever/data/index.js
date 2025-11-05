@@ -4,7 +4,7 @@ import { client } from "@csbot/client";
 
 //vektorer -> embeddings -> numerisk representation av text
 const embeddings = new OllamaEmbeddings({
-  model: "llama3.1:8b", //väljer model för omvandlingen
+  model: "nomic-embed-text:latest", //väljer model för omvandlingen
 });
 
 const vectorStore = new SupabaseVectorStore(

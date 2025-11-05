@@ -3,7 +3,6 @@ import "./index.css";
 import { Chat } from "@csbot/chat";
 import { Logo } from "@csbot/logo";
 import { useChatToggle } from "@csbot/usechattoggle";
-import { DocSection } from "../../docsection/ui";
 import { Switch } from "@csbot/switch";
 import { FaqDropdown } from "@csbot/faqdropdown";
 
@@ -24,7 +23,7 @@ export const PopUpBtn = () => {
       {/* {open && <Chat />} */}
       <div className={`chat-wrapper ${open ? "visible" : "hidden"}`}>
         {toggleSwitch === "chat" ? <Chat onSourceClick={handleSourceClick} /> : <FaqDropdown highlightSource={sourceData} />}
-        <Switch toggleSwitch={toggleSwitch} setToggleSwitch={setToggleSwitch} />
+        <Switch toggleSwitch={toggleSwitch} setToggleSwitch={setToggleSwitch} setSourceData={setSourceData} />
       </div>
       <div className="popup-button" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onClick={toggle}>
         {!open && (

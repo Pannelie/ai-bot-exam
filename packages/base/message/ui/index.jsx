@@ -15,7 +15,7 @@ export const Message = ({ role, text, children, source, onSourceClick, loading }
               {text && <p className="message__text">{text}</p>}
               {children}
             </>
-          )}{" "}
+          )}
           {source && !loading && (
             <button className="message__source-btn" onClick={onSourceClick}>
               <span className="message__source-btn-text">Läs mer här</span>
